@@ -1,0 +1,127 @@
+#Clear workspace 
+rm(list=ls())
+
+# Set seed for reproducibility
+set.seed(123)
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Simulate Population Distribution
+#------------------------------------------------------------------------------------------------------------------------------
+
+# Simulate the population of student heights (in cm)
+# Let's assume the population has a normal distribution with a mean of 170 cm and a standard deviation of 10 cm
+
+population_size <- 1000
+population_heights <- rnorm(population_size, mean = 170, sd = 10)
+
+# Plot the histogram of population heights
+hist(population_heights, breaks = 50, probability = TRUE, col = "lightgrey",
+     main = "Distribution of Student Heights", xlab = "Height (cm)",
+     ylab = "Density")
+
+# Add a vertical line at the population mean
+abline(v = 170, col = "red", lwd = 2)
+
+# Overlay a normal density curve
+curve(dnorm(x, mean = 170, sd = 10), add = TRUE, col = "darkblue", lwd = 2)
+
+# Add a legend
+legend("topright", legend = c("Histogram", "Normal Density Curve", expression("Population Mean" ~ mu[x])),
+       col = c("lightblue", "darkblue", "red"), lty = c(1, 1, 1), lwd = 2)
+
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Random sampling 
+#------------------------------------------------------------------------------------------------------------------------------
+
+# Number of samples to draw
+num_samples <- 1000
+sample_size <- 10
+
+# Initialize a vector to store sample means
+sample_means <- numeric(num_samples)
+
+# Draw 1000 samples of size 10 and compute the sample means
+for (i in 1:num_samples) {
+  sample <- sample(population_heights, size = sample_size, replace = TRUE)
+  sample_means[i] <- mean(sample)
+}
+
+# Plot the sampling distribution of the sample means
+hist(sample_means, breaks = 50, probability = TRUE, col = "lightblue",
+     main = expression("Sampling Distribution of " ~ bar(X) ~ ""),
+     xlab = expression("Sample Mean"), ylab = "Density")
+
+# Add a vertical line at the population mean
+abline(v = 170, col = "red", lwd = 2)
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Law of large numbers  
+#------------------------------------------------------------------------------------------------------------------------------
+
+# True population mean
+true_mean <- 170
+
+# Simulate taking random samples of increasing size
+sample_sizes <- seq(10, 1000, by = 10) # Sample sizes from 10 to 1000, in steps of 10
+
+# Initialize a vector to store sample means
+sample_means <- numeric()
+
+# For each sample size, take a sample from the population and compute the mean
+for (n in sample_sizes) {
+  sample <- sample(population_heights, size = n, replace = TRUE)
+  sample_means <- c(sample_means, mean(sample))
+}
+
+# Plot the sample means and show how they converge to the true population mean
+plot(sample_sizes, sample_means, type = "o", col = "blue",
+     xlab = "Sample Size, n", ylab = "Sample Mean",
+     main = "Law of Large Numbers: Convergence of Sample Mean to Population Mean")
+abline(h = true_mean, col = "red", lwd = 2) # Add a horizontal line for the true population mean
+legend("topright", legend = c("Sample Mean", expression("True Mean " ~ mu[x] ~ "")),
+       col = c("blue", "red"), lty = 1, lwd = 2)
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Sampling distribution of sample average (as n increases)
+#------------------------------------------------------------------------------------------------------------------------------
+
+# Function to plot only the density curve for a given sample size 'n'
+plot_density_curve <- function(n, num_samples, xlim_range, ylim_range) {
+  # Initialize a vector to store sample means
+  sample_means <- numeric(num_samples)
+  
+  # Draw 'num_samples' samples of size 'n' and compute the sample means
+  for (i in 1:num_samples) {
+    sample <- sample(population_heights, size = n, replace = TRUE)
+    sample_means[i] <- mean(sample)
+  }
+  
+  # Plot only the empirical density curve based on the sample means
+  plot(density(sample_means), col = "darkblue", lwd = 2, xlim = xlim_range, ylim = ylim_range,
+       main = paste("n =", n),
+       xlab = expression(paste("Sample Mean (", bar(X), ")")), ylab = "Density")
+  
+  # Add a vertical line at the population mean
+  abline(v = 170, col = "red", lwd = 2)
+
+}
+
+# Set number of samples to draw
+num_samples <- 1000
+
+# Set the same x and y limits for all plots
+xlim_range <- c(160, 180)  # Define x-axis limits based on your data
+ylim_range <- c(0, 2)    # Adjusted y-axis limits for the density
+
+# Create a 1x3 grid for the plots
+par(mfrow = c(1, 3))  # 1 row, 3 columns
+
+# Plot the density curve for n = 50
+plot_density_curve(100, num_samples, xlim_range, ylim_range)
+
+# Plot the density curve for n = 300
+plot_density_curve(400, num_samples, xlim_range, ylim_range)
+
+# Plot the density curve for n = 600
+plot_density_curve(600, num_samples, xlim_range, ylim_range)
