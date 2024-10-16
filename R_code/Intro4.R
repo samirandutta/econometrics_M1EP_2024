@@ -2,7 +2,7 @@
 rm(list=ls())
 
 # Install stargazer if not already installed
-#install.packages("stargazer")
+# install.packages("stargazer")
 
 # Load stargazer package
 # library(stargazer)
@@ -47,8 +47,8 @@ reg2 <- lm(wage ~ educ, data = data)
 summary(reg2)
 
 # Export as a LaTeX table to a file
-stargazer(reg2, type = "latex", title = "Regression Results",
-          dep.var.labels = "Wage", covariate.labels = "Education")
+#stargazer(reg2, type = "latex", title = "Regression Results",
+          # dep.var.labels = "Wage", covariate.labels = "Education")
 
 # Plot the wage data against education
 plot(data$educ, data$wage,
