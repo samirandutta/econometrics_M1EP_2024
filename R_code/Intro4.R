@@ -110,29 +110,29 @@ summary(reg5)
 data$male <- 1 - data$female
 
 # Model
-reg5 <- lm(wage ~ tenure + male, data = data)
+reg6 <- lm(wage ~ tenure + male, data = data)
 
 # Print results 
-summary(reg5)
+summary(reg6)
 
 
 # 4.Q4  Regress Wages on tenure and both dummies (with intercept)
 #===========================================================================================================================
 
 # Model
-reg6 <- lm(wage ~ tenure + male + female, data = data)
+reg7 <- lm(wage ~ tenure + male + female, data = data)
 
 # Print results 
-summary(reg6)
+summary(reg7)
 
 # 4.Q5  Regress Wages on tenure and both dummies (without intercept)
 #===========================================================================================================================
 
 # Model 
-reg7 <- lm(wage ~ tenure + male + female - 1, data = data)
+reg8 <- lm(wage ~ tenure + male + female - 1, data = data)
 
 # Display the summary of the model
-summary(reg7)
+summary(reg8)
 
 
 
