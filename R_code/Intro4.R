@@ -7,7 +7,7 @@ rm(list=ls())
 # Load stargazer package
 # library(stargazer)
 
-# Import Data
+# Import Data (Use your own path!)
 data <- read.csv("/Users/samirandutta/Library/CloudStorage/Dropbox/Teaching/IMetrics_E&P/IMetrics_2024/Datasets/wage1.csv")
 
 #===========================================================================================================================
@@ -80,10 +80,10 @@ reg3 <- lm(wage ~ educ + exper, data = data)
 summary(reg3)
 
 
-# 2.Q4 and Q5. Regress Wages on Education and Experience 
+# 2.Q4 and Q5. Regress Wages on Education
 #===========================================================================================================================
 
-# Calculate the correlation between 'educ' and 'exper'
+# Calculate the covariance between 'educ' and 'exper'
 covariance <- cov(data$educ, data$exper)
 
 # Model
@@ -93,7 +93,7 @@ reg4 <- lm(wage ~ educ, data = data)
 summary(reg4)
 
 
-# 4.Q1  Regress Wages on tenure and female Dummy
+# 4.Q1  Regress Wages on tenure and female dummy
 #===========================================================================================================================
 
 # Model
@@ -106,7 +106,7 @@ summary(reg5)
 # 4.Q3  Regress Wages on tenure and male dummy
 #===========================================================================================================================
 
-# Generate male variable
+# Generate male dummy
 data$male <- 1 - data$female
 
 # Model
@@ -125,7 +125,7 @@ reg6 <- lm(wage ~ tenure + male + female, data = data)
 # Print results 
 summary(reg6)
 
-# 4.Q4  Regress Wages on tenure and both dummies (without intercept)
+# 4.Q5  Regress Wages on tenure and both dummies (without intercept)
 #===========================================================================================================================
 
 # Model 
