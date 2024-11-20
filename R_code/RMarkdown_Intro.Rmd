@@ -1,0 +1,88 @@
+---
+title: "Introduction to Econometrics, RMarkdown Template"
+author: "Samiran Dutta"
+date: "2024-11-19"
+output: 
+  pdf_document:
+    number_sections: true
+header-includes:
+  \usepackage{amsmath}
+  \usepackage{geometry}
+  \usepackage{booktabs}
+geometry: margin = 1in 
+---
+
+```{r preliminaries, include=FALSE}
+
+#Clear workspace 
+rm(list=ls())
+
+# Loading data
+wage_data = read.csv("/Users/samirandutta/Library/CloudStorage/Dropbox/Teaching/IMetrics_E&P/IMetrics_2024/Datasets/wage1.csv")
+
+```
+
+# Introduction
+
+## Preliminaries
+
+This is an R Markdown document. For our purposes, it will allow you to produce documents in a *LaTeX* format while writing/executing your **R** code simultaneously. This is particularly efficient as it allows you to make simultaneous changes to both environments in a single interface i.e., *R Studio*.
+
+The text can be written in the source editor (the same space that you use to write code in a usual .R script), while the R code is written/executed in a *chunk*. This will allow you to write and code in a specific chronological order.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. This particular RMarkdown file is set to create a *.pdf* file by specifying -- `output: pdf_document` in the preamble (there are various output types: *.docx*, *.pptx* etc.). If you wish to run your R code without "knitting" a pdf document, click on the dark green run button on the respective chunk.
+
+## Equations and Code Chunks
+
+Suppose that we are interested in the following regression model:
+
+```{=tex}
+\begin{equation}
+wage_i = \beta_0 + \beta_1 education_i + u_i
+\end{equation}
+```
+We can write the corresponding code to run the linear regression in a R code chunk. To display the code in your document while hiding the results, set `echo = TRUE` and `results = "hide"`. This results in:
+
+\vspace{0.6cm}
+
+```{r echo=TRUE, results = "hide"}
+reg <- lm(wage ~ educ, data = wage_data)
+summary(reg)
+```
+
+If you want to display the results from the regression, set: `results = "show"`. This will give you the regression output:
+
+```{r echo = FALSE, results = "show"}
+reg <- lm(wage ~ educ, data = wage_data)
+summary(reg)
+```
+
+## Plots
+
+If you wish to create a plot but not display it, use `fig.show = "hide"`. *Note:* using `results = "hide"` only hides textual results as in the summary output of the regression.
+
+\vspace{0.6cm}
+
+```{r echo = TRUE, fig.show = "hide"}
+plot(wage_data$educ, wage_data$wage,
+     main = "",
+     xlab = "Years of Education",
+     ylab = "Hourly Wage",
+     pch = 19,         # Solid circles for points
+     col = "blue")     # Set color for points
+```
+
+\vspace{0.6cm}
+
+Display the scatter plot by setting `fig.show = "show"` and hide the R code by setting `echo = FALSE`, as follows:
+
+\vspace{0.6cm}
+
+```{r echo = FALSE, fig.show = "show", fig.cap="Write your caption here"}
+plot(wage_data$educ, wage_data$wage,
+     main = "",
+     xlab = "Years of Education",
+     ylab = "Hourly Wage",
+     pch = 19,         # Solid circles for points
+     col = "blue")     # Set color for points
+```
